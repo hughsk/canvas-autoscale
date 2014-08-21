@@ -1,0 +1,46 @@
+{
+  "name": "canvas-autoscale",
+  "version": "1.0.0",
+  "description": "A variant of canvas-fit that handles some extra magic for you: adjusting the scale of the canvas to maintain smooth framerates",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "test": "cd test && beefy index.js --open -- -t glslify"
+  },
+  "author": {
+    "name": "Hugh Kennedy",
+    "email": "hughskennedy@gmail.com",
+    "url": "http://hughsk.io/"
+  },
+  "dependencies": {
+    "element-size": "^1.1.1",
+    "fps": "0.0.3",
+    "frame-debounce": "0.0.0",
+    "raf": "^2.0.3"
+  },
+  "devDependencies": {
+    "a-big-triangle": "0.0.0",
+    "gl-context": "^0.1.0",
+    "glslify": "^1.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hughsk/canvas-autoscale.git"
+  },
+  "keywords": [
+    "fps",
+    "canvas",
+    "fit",
+    "scale",
+    "screen",
+    "window",
+    "browser",
+    "browserify",
+    "resize",
+    "automatic"
+  ],
+  "homepage": "https://github.com/hughsk/canvas-autoscale",
+  "bugs": {
+    "url": "https://github.com/hughsk/canvas-autoscale/issues"
+  }
+}
