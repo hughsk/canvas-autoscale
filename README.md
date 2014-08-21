@@ -20,10 +20,17 @@ fit within its parent element. Takes the following options:
   before increasing it again. Defaults to `[55, 59]`.
 * `fps`: a custom function that should return the current framerate. Optional.
 * `gap`: the amount of frames to wait between rescales. Defaults to 60.
+* `auto`: automatically resize/rescale the canvas in response to window resizes
+  and framerate changes respectively. Defaults to `true`, set to `false` to disable.
 
 `updated` is called every time the canvas size is changed – pass your render
 function in here to avoid the screen flickering every time your canvas is
 resized.
+
+### `resize.tick()`
+
+If you're using `auto: false`, call this method once per frame to check the
+canvas' framerate and update the scale accordingly.
 
 ## License
 
