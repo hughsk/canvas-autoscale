@@ -1,6 +1,6 @@
 {
   "name": "canvas-autoscale",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A variant of canvas-fit that handles some extra magic for you: adjusting the scale of the canvas to maintain smooth framerates",
   "main": "index.js",
   "license": "MIT",
