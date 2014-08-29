@@ -48,6 +48,12 @@ function fit(canvas, options, updated) {
   resize.tick   = tick
   resize.resize = resize
 
+  Object.defineProperty(resize, 'scale', {
+    get: function() {
+      return scale
+    }
+  })
+
   return resize()
 
   function tick() {

@@ -32,6 +32,10 @@ resized.
 If you're using `auto: false`, call this method once per frame to check the
 canvas' framerate and update the scale accordingly.
 
+### `resize.scale`
+
+Read-only property to get the current scale of the canvas.
+
 ## License
 
 MIT. See [LICENSE.md](http://github.com/hughsk/canvas-autoscale/blob/master/LICENSE.md) for details.
