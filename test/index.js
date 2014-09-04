@@ -15,11 +15,15 @@ var shader = Shader({
   , frag: './shader.frag'
 })(gl)
 
+var t = 1
 function render() {
-  console.clear()
-  console.log('width:', canvas.width)
-  console.log('height:', canvas.height)
-  console.log('fps:', Math.round(scale.rate))
+  if (!(t++ % 30)) {
+    console.clear()
+    console.log('width:', canvas.width)
+    console.log('height:', canvas.height)
+    console.log('fps:', Math.round(scale.rate))
+    console.log('scale:', scale.scale)
+  }
 
   gl.viewport(0, 0, canvas.width, canvas.height)
   shader.bind()
