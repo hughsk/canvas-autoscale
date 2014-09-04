@@ -1,5 +1,6 @@
 var throttle = require('frame-debounce')
 var size     = require('element-size')
+var clamp    = require('clamp')
 var raf      = require('raf')
 var fps      = require('fps')
 
@@ -31,52 +32,52 @@ function fit(canvas, options, updated) {
   canvas.style.top = 0
   canvas.style.left = 0
 
-  var scales = (options.scales || defaultScales).slice().sort()
-  var target = options.target || [55, 59]
-  var getFPS = options.fps || defaultFPS()
-  var sidx   = scales.length - 1
-  var scale  = scales[sidx]
-  var gap    = options.gap || 60
-  var limit  = 0
-  var first  = true
+  var scales      = (options.scales || defaultScales).slice().sort(numeric)
+  var target      = options.target || [55, 59]
+  var getFPS      = options.fps || defaultFPS()
+  var sensitivity = options.sensitivity || 0.01
+  var gap         = options.gap || 60
+  var scale       = scales[0]
+  var goalScale   = 0
+  var currScale   = 0
+  var limit       = 0
+  var first       = true
+
+  resize.rate   = target[1]
+  resize.tick   = tick
+  resize.resize = resize
+
+  Object.defineProperty(resize, 'scale', {
+    get: function() { return scale }
+  })
 
   if (!('auto' in options) || options.auto) {
     setupAuto()
   }
 
-  resize.rate   = target[target.length - 1]
-  resize.tick   = tick
-  resize.resize = resize
-
-  Object.defineProperty(resize, 'scale', {
-    get: function() {
-      return scale
-    }
-  })
-
   return resize()
 
-  function tick() {
-    var framerate = getFPS()
-    if (--limit > 0) return
-    if (framerate <= target[0]) prevScale(); else
-    if (framerate >= target[1]) nextScale()
+  function defaultFPS() {
+    var measure = fps({ decay: 1, every: Infinity })
+
+    return function() {
+      measure.tick()
+      return measure.rate
+    }
   }
 
-  function nextScale() {
-    if (sidx >= scales.length - 1) return
-    if (limit > 0) return
-    scale = scales[++sidx]
-    limit = gap
-    resize()
-  }
+  function setupAuto() {
+    window.addEventListener('resize'
+      , throttle(resize)
+      , false
+    )
 
-  function prevScale() {
-    if (sidx <= 0) return
-    if (limit > 0) return
-    scale = scales[--sidx]
-    limit = 300
-    resize()
+    raf(frame)
+
+    function frame() {
+      raf(frame)
+      tick()
+    }
   }
 
   function resize() {
@@ -104,29 +105,29 @@ function fit(canvas, options, updated) {
     return resize
   }
 
-  function setupAuto() {
-    window.addEventListener('resize'
-      , throttle(resize)
-      , false
-    )
+  function tick() {
+    var framerate = resize.rate = getFPS()
+    if (limit-- > 0) return
 
-    raf(frame)
+    var nextScale = framerate <= target[0]
+      ? goalScale + 1
+      : framerate >= target[1]
+      ? goalScale - 1
+      : goalScale
 
-    function frame() {
-      raf(frame)
-      tick()
+    nextScale = clamp(nextScale, 0, scales.length - 1)
+    goalScale = goalScale + (nextScale - goalScale) * sensitivity
+    nextScale = Math.round(goalScale)
+
+    if (nextScale !== currScale) {
+      currScale = nextScale
+      scale = scales[currScale]
+      limit = gap
+      resize()
     }
   }
+}
 
-  function defaultFPS() {
-    var measure = fps({
-        decay: 0.05
-      , every: Infinity
-    })
-
-    return function() {
-      measure.tick()
-      return resize.rate = measure.rate
-    }
-  }
+function numeric(a, b) {
+  return b - a
 }

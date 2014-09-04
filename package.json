@@ -13,6 +13,7 @@
     "url": "http://hughsk.io/"
   },
   "dependencies": {
+    "clamp": "^1.0.1",
     "element-size": "^1.1.1",
     "fps": "0.0.3",
     "frame-debounce": "0.0.0",
@@ -20,6 +21,8 @@
   },
   "devDependencies": {
     "a-big-triangle": "0.0.0",
+    "beefy": "^2.1.1",
+    "browserify": "^5.11.0",
     "gl-context": "^0.1.0",
     "glslify": "^1.6.0"
   },
