@@ -1,4 +1,6 @@
-# canvas-autoscale [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
+# canvas-autoscale [![deprecated](http://badges.github.io/stability-badges/dist/deprecated.svg)](http://github.com/badges/stability-badges)
+
+**Deprecated: this doesn't work as well as I'd like it to, and would be better off rewritten :)**
 
 A variant of [canvas-fit](http://github.com/hughsk/canvas-fit) that handles
 some extra magic for you: adjusting the scale of the canvas to maintain
